@@ -6,6 +6,7 @@ const githubUserName = properties.getProperty('githubUserName');
 const githubRepository = properties.getProperty('githubRepository');
 const name = properties.getProperty('name');
 const email = properties.getProperty('email');
+const branchName = properties.getProperty('branchName');
 
 const siteUrl = properties.getProperty('siteUrl');
 const folderIdSpecial = properties.getProperty('folderIdSpecial');
@@ -14,7 +15,7 @@ const homePath = '';
 
 const githubOption = { "name": name, "email": email };
 let github = new GitHubAPI.GitHubAPI(githubUserName, githubRepository, githubAccessToken, githubOption);
-let branch = github.getBranch("Netlify");
+let branch = github.getBranch(branchName);
 let pTree = github.getTree(branch['commit']['commit']['tree']['sha']);
 /**
  * 自動生成，日付と更新した科目を入力
@@ -47,7 +48,7 @@ function updateIndexPage() {
   };
   const tree = github.createTree(data);
   const commit = github.createCommit(commitMessage, tree['sha'], branch['commit']['sha']);
-  const result = github.updateReference("Netlify", commit['sha']);
+  const result = github.updateReference(branchName, commit['sha']);
   Logger.log(result);
   return;
 }
@@ -72,7 +73,7 @@ function updateUploadPage() {
   };
   const tree = github.createTree(data);
   const commit = github.createCommit(commitMessage, tree['sha'], branch['commit']['sha']);
-  const result = github.updateReference("Netlify", commit['sha']);
+  const result = github.updateReference(branchName, commit['sha']);
   Logger.log(result);
   return;
 }
@@ -92,7 +93,7 @@ function updatePagesSpecial() {
     };
     const tree = github.createTree(data);
     const commit = github.createCommit(commitMessage, tree['sha'], branch['commit']['sha']);
-    const result = github.updateReference("Netlify", commit['sha']);
+    const result = github.updateReference(branchName, commit['sha']);
     Logger.log(result);
   }
   return;
@@ -113,7 +114,7 @@ function updatePagesGeneral() {
     };
     const tree = github.createTree(data);
     const commit = github.createCommit(commitMessage, tree['sha'], branch['commit']['sha']);
-    const result = github.updateReference("Netlify", commit['sha']);
+    const result = github.updateReference(branchName, commit['sha']);
     Logger.log(result);
   }
   return;
